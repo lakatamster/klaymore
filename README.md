@@ -3,6 +3,7 @@
 Klaymore is a lightweight Dependency Injection (DI) framework for Kotlin applications. It simplifies the management of dependencies in your application, making it easier to create, maintain, and test your code.
 
 [![Release](https://jitpack.io/v/lakatamster/klaymore.svg)](https://jitpack.io/#lakatamster/klaymore)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.lakatamster/klaymore/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.lakatamster/klaymore)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
