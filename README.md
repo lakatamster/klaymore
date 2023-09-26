@@ -40,7 +40,7 @@ https://jitpack.io/#lakatamster/klaymore
    value class Ten(val value: Int)
 
    val valuesModule = module {
-       bind<Ten>(Singleton) { -> Ten(10) }
+       bind<Ten>(Singleton) with { -> Ten(10) }
    }
    ```
 
