@@ -3,9 +3,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.9.0'
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
-group = 'klaymore'
+group = 'io.github.lakatamster'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -23,4 +25,68 @@ test {
 
 tasks.withType(KotlinCompile).configureEach {
     kotlinOptions.jvmTarget = '17'
+}
+
+tasks.register('sourcesJar', Jar) {
+    archiveClassifier.set('sources')
+    from sourceSets.main.allJava
+}
+
+tasks.register('javadocJar', Jar) {
+    archiveClassifier.set('javadoc')
+    from tasks.javadoc.destinationDir
+}
+
+publishing {
+    repositories {
+        maven {
+            name "MavenCentral"
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = uri(version.toString().endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl)
+            String MAVEN_UPLOAD_USER = project.findProperty("MAVEN_UPLOAD_USER") ?: System.getenv("MAVEN_UPLOAD_USER")
+            String MAVEN_UPLOAD_PWD = project.findProperty("MAVEN_UPLOAD_PWD") ?: System.getenv("MAVEN_UPLOAD_PWD")
+            credentials {
+                username = MAVEN_UPLOAD_USER
+                password = MAVEN_UPLOAD_PWD
+            }
+        }
+    }
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
+            artifact tasks.sourcesJar
+            artifact tasks.javadocJar
+            pom {
+                name.set("Klaymore")
+                description.set("Koltin DI framework")
+                url.set("https://github.com/lakatamster/klaymore")
+                licenses {
+                    license {
+                        name.set("Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("Lakatamster")
+                        name.set("Kirill Ezhemenskii")
+                        email.set("kyris.cyprus@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:svn:https://github.com/lakatamster/klaymore.git")
+                    developerConnection.set("scm:svn:https://github.com/lakatamster/klaymore.git")
+                    url.set("https://github.com/lakatamster/klaymore")
+                }
+            }
+        }
+    }
+}
+
+signing {
+    String PGP_SIGNING_KEY = project.findProperty("PGP_SIGNING_KEY") ?: System.getenv("PGP_SIGNING_KEY")
+    String PGP_SIGNING_PASSWORD = project.findProperty("PGP_SIGNING_PASSWORD") ?: System.getenv("PGP_SIGNING_PASSWORD")
+    useInMemoryPgpKeys(PGP_SIGNING_KEY, PGP_SIGNING_PASSWORD)
+    sign(publishing.publications.mavenJava)
 }
