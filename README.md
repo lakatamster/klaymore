@@ -19,7 +19,7 @@ Klaymore is a lightweight Dependency Injection (DI) framework for Kotlin applica
 
 ### Installation
 
-https://jitpack.io/#lakatamster/klaymore
+https://jitpack.io/#lakatamster/klaymore or https://central.sonatype.com/artifact/io.github.lakatamster/klaymore
 
 ### Usage
 
