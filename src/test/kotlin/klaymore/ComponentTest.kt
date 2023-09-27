@@ -47,7 +47,7 @@ class ComponentTest {
             val a: A by provider()
             val b: B by provider()
             val c: C by provider()
-            val ic: IC by provider()
+            val ic: IC by inject()
         }
 
         withDI(component) {

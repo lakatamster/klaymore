@@ -29,7 +29,7 @@ import kotlin.reflect.KClass
  *      Example:
  *      ```
  *      withDI(component) {
- *          val someInterface = component.provide<SomeInterface>()
+ *          val someInterface: SomeInterface = provide()
  *          ...
  *      }
  *      // or provide property
@@ -49,7 +49,7 @@ import kotlin.reflect.KClass
  *      Example:
  *      ```
  *      withDI(subcomponent) {
- *          val childOtherInterface = subcomponent.provide<ChildOtherInterface>()
+ *          val childOtherInterface: ChildOtherInterface = provide()
  *      }
  *      ```
  */

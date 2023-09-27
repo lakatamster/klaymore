@@ -16,6 +16,15 @@ inline fun <reified T : Any> DIComponentHolder.provide(): T =
 inline fun <reified T : Any> DIComponentHolder.provider(): ReadOnlyProperty<Any, T> =
     ReadOnlyProperty { _, _ -> provide() }
 
+inline fun <reified T : Any> DIComponentHolder.inject(): ReadOnlyProperty<Any, T> =
+    object : ReadOnlyProperty<Any, T> {
+
+        private val value: T = provide()
+
+        override fun getValue(thisRef: Any, property: kotlin.reflect.KProperty<*>): T =
+            value
+    }
+
 inline fun <reified T : Any,
     reified P1 : Any> DIComponentHolder.call(
     function: (P1) -> T

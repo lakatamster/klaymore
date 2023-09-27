@@ -62,7 +62,7 @@ https://jitpack.io/#lakatamster/klaymore or https://central.sonatype.com/artifac
 
    ```kotlin
    withDI(component) {
-       val someInterface = component.provide<SomeInterface>()
+       val someInterface: SomeInterface = provide()
        // ...
    }
    ```
@@ -92,7 +92,7 @@ https://jitpack.io/#lakatamster/klaymore or https://central.sonatype.com/artifac
 
    ```kotlin
    withDI(subcomponent) {
-       val childOtherInterface = subcomponent.provide<ChildOtherInterface>()
+       val childOtherInterface: ChildOtherInterface = provide()
    }
    ```
 
